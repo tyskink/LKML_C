@@ -126,31 +126,112 @@ void LK_convolutional2D(LK_Accuarcy *input,int isize_w, int isize_h,
 	//}
 	 //osize_w= isize_w - ksize_w + 1;
 	 //osize_h= isize_h - ksize_h + 1;
-	LK_Accuarcy *o_p;
+
 	for (int h = 0; h<osize_h; h++)
 	{
 		
 		for (int w = 0; w<osize_w; w++)
 		{
 			//for every feature map 
-			o_p = output + osize_w*h + w;
-			*o_p =0; // to avoid if the *o_p is not zero!!!!
+			//o_p = output + osize_w*h + w;
+			//*o_p =0; // to avoid if the *o_p is not zero!!!!	
+			
+			*output = bias;
 			for (int kh = 0; kh < ksize_h; kh++)
 			{
 				for (int kw = 0; kw < ksize_w; kw++)
 				{
-					*o_p = *o_p + *(input +h*isize_w+w+ kh*isize_w + kw) * *(kernel + kh*ksize_w + kw);
+					*output = *output + *(input +h*isize_w+w+ kh*isize_w + kw) * *(kernel + kh*ksize_w + kw);
 				}
 				
 			}
 			//input++;
-			*o_p += bias;
+			output++;
 		}
 		//input = input + isize_w;
 	}
 }
 
+void LK_convolutional2D_Relu(LK_Accuarcy *input, int isize_w, int isize_h,
+	LK_Accuarcy* kernel, int ksize_w, int ksize_h, LK_Accuarcy bias,
+	LK_Accuarcy *output, int osize_w, int osize_h,
+	int padding)
+{
+	//double *input_p[ksize_h];				Thumb, 240 bytes, Stack size 80 bytes,Max Depth = 168
+	//for(int i=0,i++,i<ksize_h)
+	//{
+	//input_p[i]=input+i;
+	//}
+	//osize_w= isize_w - ksize_w + 1;
+	//osize_h= isize_h - ksize_h + 1;
 
+	for (int h = 0; h<osize_h; h++)
+	{
+
+		for (int w = 0; w<osize_w; w++)
+		{
+			//for every feature map 
+			//o_p = output + osize_w*h + w;
+			//*o_p =0; // to avoid if the *o_p is not zero!!!!	
+
+			*output = bias;
+			for (int kh = 0; kh < ksize_h; kh++)
+			{
+				for (int kw = 0; kw < ksize_w; kw++)
+				{
+					*output = *output + *(input + h*isize_w + w + kh*isize_w + kw) * *(kernel + kh*ksize_w + kw);
+				}
+
+			}
+			//input++;
+			if (*output < 0)*output = 0;
+			output++;
+		}
+		//input = input + isize_w;
+	}
+}
+
+void LK_convolutional2D_prepara(LK_Accuarcy *input, int isize_w, int isize_h,
+	LK_Accuarcy* kernel, int ksize_w, int ksize_h, LK_Accuarcy bias,
+	LK_Accuarcy *output, int osize_w, int osize_h,
+	int	input_jump, int input_backup, int input_jumpout, int kernel_backup
+)
+{
+	//	int input_jump=isize_w-ksize_w;
+	//	int input_backup=ksize_h*isize_w-1;
+	//	int input_jumpout=(ksize_w-1);
+	//	int kernel_backup=ksize_w*ksize_h;
+	//	#define input_jump 2
+	//	#define input_backup 14
+	//	#define input_jumpout 2
+	//	#define kernel_backup 9
+
+	for (int h = 0; h<osize_h; h++)
+	{
+		for (int w = 0; w<osize_w; w++)
+		{
+			*output = bias;
+			for (int kh = 0; kh < ksize_h; kh++)
+			{
+				for (int kw = 0; kw < ksize_w; kw++)
+				{
+					//	*output = *output + *(input +h*isize_w+w+ kh*isize_w + kw) * *(kernel + kh*ksize_w + kw);										
+					//	printf_s("the input is %f 	kernel is %f 	output is %f\r\n",*(input +h*isize_w+w+ kh*isize_w + kw),*(kernel + kh*ksize_w + kw),*output);
+					*output = *output + (*input)*(*kernel);
+					//printf_s("the input is %f 	kernel is %f 	output is %f\r\n",*(input),*(kernel ),*output);										
+					kernel++;
+					input++;
+				}
+				input += input_jump;
+			}
+			output++;
+			input -= input_backup;// basic point of input									
+			kernel -= kernel_backup;
+
+		}
+		input += input_jumpout;
+	}
+}
 
 void LK_Padding(LK_Accuarcy *input, int isize_w, int isize_h, LK_Accuarcy *output, int osize_w, int osize_h, int padding)
 {

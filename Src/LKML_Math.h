@@ -27,6 +27,14 @@ Example:
 */
 void LK_convolutional2D(LK_Accuarcy *input, int isize_w, int isize_h, LK_Accuarcy* kernel, int ksize_w, int ksize_h, LK_Accuarcy bias, LK_Accuarcy *output, int osize_w, int osize_h, int padding);
 
+
+
+void LK_convolutional2D_prepara(LK_Accuarcy *input, int isize_w, int isize_h,
+	LK_Accuarcy* kernel, int ksize_w, int ksize_h, LK_Accuarcy bias,
+	LK_Accuarcy *output, int osize_w, int osize_h,
+	int	input_jump, int input_backup, int input_jumpout, int kernel_backup
+);
+
 /*
 Example:
 	double a[5][5] = { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25 };
