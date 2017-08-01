@@ -1,5 +1,7 @@
 #include "LKML_Math.h"
 #include "LKML_Config.h"
+
+//#include "LK_STM32.h"
 #include<math.h>
 
 
@@ -373,6 +375,27 @@ void LK_matrix_multpile(LK_Accuarcy * A, int A_row, int A_colum, LK_Accuarcy * B
 				*C_current_position += *(A_current_position + num)**(B_current_position + num*B_colum);
 			}
 		}
+	}
+}
+
+
+void LK_FullyConnect(LK_Accuarcy * W, int W_ROW, int W_COLUM, LK_Accuarcy * X, LK_Accuarcy * C,LK_Accuarcy *bias)
+{
+ 
+	for (int row = 0; row < W_ROW; row++)
+	{
+		
+	 *C=*bias;
+
+			for (int num = 0; num < W_COLUM; num++)
+			{
+				*C += (*X )*(*W);
+				//printf_s(" the W is %f 	X is %f 	C is %f \r\n",*(W),*(X ),*C);		
+				X++;
+				W++;
+			}
+		X-=W_COLUM;
+	 C++;
 	}
 }
 

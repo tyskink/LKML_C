@@ -101,6 +101,18 @@ Example:
 void LK_matrix_multpile(LK_Accuarcy *A, int A_row, int A_colum, LK_Accuarcy *B, int B_row, int B_colum, LK_Accuarcy *C);
 
 
+/*
+Example:
+	double a[5][5] = { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25 };
+	double kernel[5] = { 1,0,1,0,1};
+	double bias[5]={0.1,0.1,0.1,0.1,0.1};
+	double out[5] ;
+	LK_FullyConnect(&a[0][0],5,5,&kernel[0],&out[0],&bias[0]);
+	LK_displayMatrix(&out[0],5,1," out");
+
+*/
+void LK_FullyConnect(LK_Accuarcy * W, int W_ROW, int W_COLUM, LK_Accuarcy * X, LK_Accuarcy * C,LK_Accuarcy *bias);
+
 void LK_matrix_addition(LK_Accuarcy *A, LK_Accuarcy *B, int Size);
 
 //newline
