@@ -11,18 +11,20 @@
 #define LK_PC 0
 #define LK_STM32F7 1
 
-
+//-------------------------------------------------------------------------------------------------------
 
 
 // Configuration
 
-#define LK_COMPUTING_ACCURACY  	LK_DOUBLE// 2 DOUBLE   //1 SINGLE  //0 INT   //4 BINARY
+#define LK_COMPUTING_ACCURACY  	LK_SINGLE// 2 LK_DOUBLE   //1 LK_SINGLE  //0 INT   //4 BINARY
 #define LK_OPMODE 				LK_TIME // RAM   // POW
 #define LK_PLATFORM  				LK_PC
 
   
 
 
+
+//-------------------------------------------------------------------------------------------
 
 #if LK_COMPUTING_ACCURACY==	LK_DOUBLE
 	#define LK_Accuarcy double 

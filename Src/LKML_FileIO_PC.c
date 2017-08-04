@@ -181,7 +181,7 @@ void LK_displayMatrix3D(LK_Accuarcy * A, int Num_of_map, int Num_of_row, int Num
 			for (int column = 0; column < Num_of_colum; column++)
 			{
 				//current_position = A + row*Num_of_colum + column;
-				printf_s("%.5f	", (LK_Accuarcy)*current_position);
+				printf_s("%.4f	", (LK_Accuarcy)*current_position);
 
 
 				current_position++;
