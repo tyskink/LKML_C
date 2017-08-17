@@ -410,6 +410,19 @@ void LK_matrix_addition(LK_Accuarcy * A, LK_Accuarcy * B, int Size)
 	}
 }
 
+void Convert_single2int(float *input, int *output, int times, int num)
+{
+	//num--;
+	//(*output) = (int)(*input);
+	while (num--)
+	{		
+	
+		(*output) = (int)(*input*times );
+		output++;
+		input++;
+	}
+}
+
 
 
 
@@ -433,5 +446,6 @@ int LK_maxofMatrix(LK_Accuarcy * p, int p_length)
 		maxindex += 1;
 	return maxindex;
 }
+
 
 //newline

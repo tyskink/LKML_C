@@ -16,7 +16,7 @@
 
 // Configuration
 
-#define LK_COMPUTING_ACCURACY  	LK_SINGLE// 2 LK_DOUBLE   //1 LK_SINGLE  //0 INT   //4 BINARY
+#define LK_COMPUTING_ACCURACY  	LK_SINGLE// 2 LK_DOUBLE   //1 LK_SINGLE  //0 LK_INT   //4 BINARY
 #define LK_OPMODE 				LK_TIME // RAM   // POW
 #define LK_PLATFORM  				LK_PC
 

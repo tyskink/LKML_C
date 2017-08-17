@@ -115,4 +115,8 @@ void LK_FullyConnect(LK_Accuarcy * W, int W_ROW, int W_COLUM, LK_Accuarcy * X, L
 
 void LK_matrix_addition(LK_Accuarcy *A, LK_Accuarcy *B, int Size);
 
+//output=input*times
+void Convert_single2int(float *input, int *output, int times, int num);
+
+
 //newline
