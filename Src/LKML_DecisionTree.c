@@ -3,7 +3,7 @@
 
 #include "LK_STM32.h"
 
-LK_Accuarcy x[784];
+unsigned char x[784];
 
 
 void DecisionTree_Model_1(void)	
@@ -20,7 +20,7 @@ node1();
 void node1 (void)
 {
  
-if (x[351]<0.515686) 	 
+if (x[351]<=234) 	 
 	node2();
 else 
 	node3(); //this
@@ -29,7 +29,7 @@ else
 
 void node2(void)
 {
-if (x[569]<0.00196078)  
+if (x[569]<125)  
 	printf_s("  class 1"); 
 else  
 	printf_s("  class 2"); 
@@ -38,7 +38,7 @@ else
 
 void node3(void)
 {
-if (x[490]<0.103922) //this
+if (x[490]<=255) //this
 	printf_s("  class 1"); 
 else  
 	printf_s("  class 2"); 
