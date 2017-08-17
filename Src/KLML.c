@@ -229,44 +229,49 @@ void Model_CNN_ICRSF_int()
 
 	//image input Layer
 	LK_Accuarcy Test_feature[testidex + 1][784] = { 0 };
-	LK_Read_lkf("C:/Users/kongq/Desktop/LKML_C/DataSet/MNIST_test_features_10000_784_scale.lkf", &Test_feature[0][0], (testidex + 1) * 784);
+
+	float Test_feature_f[testidex + 1][784] = { 0 };
+	float ZeroCenter_Parameters_f[28][28];
+	LK_Read_lkf("C:/Users/kongq/Desktop/LKML_C/DataSet/MNIST_test_features_10000_784_scale.lkf", &Test_feature_f[0][0], (testidex + 1) * 784);
 	//LK_displayMatrix(&Test_feature[0][0], 28, 28, "Input");
 
 	LK_Accuarcy ZeroCenter_Parameters[28][28] = { 0 };
-	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/Zc.lkf", &ZeroCenter_Parameters[0][0], 28 * 28);
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/Zc.lkf", &ZeroCenter_Parameters_f[0][0], 28 * 28);
 	//LK_displayMatrix(&ZeroCenter_Parameters[0][0], 28, 28, "Zero-Center");
 
-	int Test_feature_int[1][784] = { 0 };
-	int ZeroCenter_Parameters_int[28][28];
-	Convert_single2int(&Test_feature[testidex][0], &Test_feature_int[0][0], 255, 784);
-	Convert_single2int(&ZeroCenter_Parameters[0][0], &ZeroCenter_Parameters_int[0][0],  255,784);
+
+	Convert_single2int(&Test_feature_f[testidex][0], &Test_feature[testidex][0], 255, 784);
+	Convert_single2int(&ZeroCenter_Parameters_f[0][0], &ZeroCenter_Parameters[0][0],  255,784);
 
 	LK_ZeroCenter(&Test_feature[testidex][0], &ZeroCenter_Parameters[0][0], 28 * 28);
 	//LK_displayMatrix(&Test_feature[0][0],28,28,"h0");
 
 	// Conv Layer
+	float C1K_f[6][5][5] = { 0 };
 	LK_Accuarcy C1K[6][5][5] = { 0 };
-	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K1.lkf", &C1K[0][0][0], 5 * 5);
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K1.lkf", &C1K_f[0][0][0], 5 * 5);
 	//LK_displayMatrix(&C1K[0][0][0],5,5,"C1K1");
 
-	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K2.lkf", &C1K[1][0][0], 5 * 5);
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K2.lkf", &C1K_f[1][0][0], 5 * 5);
 	//LK_displayMatrix(&C1K[1][0][0], 5, 5, "C1K2");
 
-	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K3.lkf", &C1K[2][0][0], 5 * 5);
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K3.lkf", &C1K_f[2][0][0], 5 * 5);
 	//LK_displayMatrix(&C1K[2][0][0], 5, 5, "C1K3");
 
-	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K4.lkf", &C1K[3][0][0], 5 * 5);
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K4.lkf", &C1K_f[3][0][0], 5 * 5);
 	//LK_displayMatrix(&C1K[3][0][0], 5, 5, "C1K4");
 
-	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K5.lkf", &C1K[4][0][0], 5 * 5);
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K5.lkf", &C1K_f[4][0][0], 5 * 5);
 	//LK_displayMatrix(&C1K[4][0][0], 5, 5, "C1K5");
 
-	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K6.lkf", &C1K[5][0][0], 5 * 5);
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K6.lkf", &C1K_f[5][0][0], 5 * 5);
 	//LK_displayMatrix(&C1K[5][0][0], 5, 5, "C1K6");
 
+	float C1B_f[6] = { 0 };
 	LK_Accuarcy C1B[6] = { 0 };
-	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1B.lkf", &C1B[0], 6);
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1B.lkf", &C1B_f[0], 6);
 	//LK_displayMatrix(&C1B[0], 1, 6, "C1B");
+
 
 	LK_Accuarcy h1[6][24][24] = { 0 };
 	LK_convolutional2D(&Test_feature[testidex][0], 28, 28, &C1K[0][0][0], 5, 5, C1B[0], &h1[0][0][0], 24, 24, 0);
