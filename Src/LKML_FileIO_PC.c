@@ -150,10 +150,12 @@ void LK_displayMatrix(LK_Accuarcy * A, int Num_of_row, int Num_of_colum,const ch
 		{
 			current_position = A + row*Num_of_colum + column;
 
+#if	LK_COMPUTING_ACCURACY==LK_INT
+			printf_s("%d ", (LK_Accuarcy)*current_position);
+#endif
+#if	LK_COMPUTING_ACCURACY==LK_SINGLE
 			printf_s("%.4f ", (LK_Accuarcy)*current_position);
-
-			
-
+#endif
 		}
 		printf_s("\r\n");
 	}
@@ -181,7 +183,12 @@ void LK_displayMatrix3D(LK_Accuarcy * A, int Num_of_map, int Num_of_row, int Num
 			for (int column = 0; column < Num_of_colum; column++)
 			{
 				//current_position = A + row*Num_of_colum + column;
-				printf_s("%.4f	", (LK_Accuarcy)*current_position);
+#if	LK_COMPUTING_ACCURACY==LK_INT
+				printf_s("%d	", (LK_Accuarcy)*current_position);
+#endif
+#if	LK_COMPUTING_ACCURACY==LK_SINGLE
+				printf_s("%.4f ", (LK_Accuarcy)*current_position);
+#endif
 
 
 				current_position++;

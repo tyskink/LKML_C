@@ -335,7 +335,25 @@ void LK_ZeroCenter(LK_Accuarcy * im, LK_Accuarcy * meanParameter, int Size)   //
 
 void LK_Softmax(LK_Accuarcy * IN, int Size)
 {
-	LK_Accuarcy SUM = 0;
+#if	LK_COMPUTING_ACCURACY==LK_INT
+	float SUM = 0;
+
+	for (int i = 0; i < Size; i++)
+	{
+		SUM += *IN;
+		IN++;
+	}
+
+	for (int i = 0; i < Size; i++)
+	{
+		IN--;
+		*IN = (*IN) / SUM;
+	}
+ 
+#else
+	 LK_Accuarcy SUM = 0;
+
+	
 
 	for (int i = 0; i < Size; i++)
 	{
@@ -345,6 +363,8 @@ void LK_Softmax(LK_Accuarcy * IN, int Size)
 		#if (LK_COMPUTING_ACCURACY==LK_SINGLE)
 				*IN = exp2f(*IN);
 		#endif
+
+
 				SUM += *IN;
 				IN++;
 	 }
@@ -354,7 +374,7 @@ void LK_Softmax(LK_Accuarcy * IN, int Size)
 		*IN = (*IN) / SUM;
 		
 	}
-
+#endif
 }
 
 void LK_matrix_multpile(LK_Accuarcy * A, int A_row, int A_colum, LK_Accuarcy * B, int B_row, int B_colum, LK_Accuarcy * C)
