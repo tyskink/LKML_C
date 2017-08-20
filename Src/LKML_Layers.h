@@ -45,7 +45,9 @@ extern "C" {
 	//Conv, Relu, MaxPoolling 
 	void LK_ConvReluPoolLayer(LK_Data* Input, LK_Kernel* Kernel, LK_Matrix* Output);
 
-	void LK_FullyConnectLayer(LK_Matrix* input, LK_Matrix* FCParameter);
+
+	// Weights Array * Features Vector
+	void LK_FullyConnectLayer( LK_Kernel* FCParameter,LK_Matrix* Input, LK_Matrix* Output);
 
 #ifdef __cplusplus
 }

@@ -199,7 +199,7 @@ void Model_CNN_ICRSF_single()
 
 	LK_Accuarcy F5W[10][864] = { 0 };
 	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/F5W.lkf", &F5W[0][0], 864 * 10);
-	//LK_displayMatrix(&F5W[0][0], 10,864 ,"F5W");
+	LK_displayMatrix(&F5W[0][0], 10,864 ,"F5W");
 
 	LK_Accuarcy h3[10] = { 0 };
 	LK_matrix_multpile(&F5W[0][0], 10, 864, &h2[0][0][0], 864, 1, &h3[0]);
@@ -349,11 +349,12 @@ void Model_CNN_1_1()  //float parameter, float computation
 	FILE *FeaturesFILE;
 	fopen_s(&FeaturesFILE, "C:/Users/kongq/Desktop/LKML_C/DataSet/MNIST_test_features_10000_784_scale.lkf", "rb");
 	 
-
+	//ImageInput: Zerocenter
 	LK_Accuarcy_Data ZeroCenter_Parameters[784];
 	const LK_Data ZeroCenterParameter = { .W = 28,.H = 28,.D = 1,.Size = 784,.Matrix = &ZeroCenter_Parameters[0] };
 	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/Zc.lkf", &ZeroCenter_Parameters[0], 784);
 
+	//Conv Relu MaxPoolling
 	LK_Accuarcy_Data C1K[6][5][5]; 
 	LK_Accuarcy_Data C1B[6];	
 	const LK_Kernel Conv1Kernel={.W=5, .H=5, .D=6, .Matrix= &C1K[0][0][0], .Bias= &C1B[0] ,.KernelSize=25};
@@ -364,10 +365,20 @@ void Model_CNN_1_1()  //float parameter, float computation
 	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K5.lkf", &C1K[4][0][0], 5 * 5);
 	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K6.lkf", &C1K[5][0][0], 5 * 5);
 	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1B.lkf", &C1B[0], 6);
+	LK_Accuarcy_Calculate h2[6][12][12];
+	const LK_Matrix H2={.W=12,.H=12,.D=6,.Size=864,.Matrix=&h2[0][0][0] };
 
 
-	LK_Accuarcy h2[6][12][12];
-	const LK_Matrix H2={.W=12,.H=12,.D=6,.Matrix=&h2[0][0][0] };
+
+	LK_Accuarcy F5W[10][864] ;	
+	LK_Accuarcy F5B[10] ;
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/F5W.lkf", &F5W[0][0], 864 * 10);
+	LK_Read_lkd("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/F5B.lkf", &F5B[0], 10);
+	const LK_Kernel FC = { .W = 864,.H = 10,.D = 1,.Matrix = &F5W[0][0],.Bias = &F5B[0] ,.KernelSize = 25 };
+
+	LK_Accuarcy_Calculate h3[10] ;
+	const LK_Matrix H3 = { .W = 1,.H = 10,.D = 1,.Size=10,.Matrix = &h3[0] };
+
 
 
 	int index = 10000;
@@ -378,7 +389,12 @@ void Model_CNN_1_1()  //float parameter, float computation
 		LK_ZeroCenterLayer(&TestFeature, &ZeroCenterParameter);
 
 		LK_ConvReluPoolLayer(&TestFeature,&Conv1Kernel,&H2);
-		LK_displayMatrix3D(&h2[0][0][0], 6, 12, 12, "h2");
+		//LK_displayMatrix3D(&h2[0][0][0], 6, 12, 12, "h2");
+
+		LK_FullyConnectLayer(&FC, &H2,	&H3);
+		//LK_displayMatrix(&h3[0], 10, 1, "h3+b");
+
+
 		getchar();
 	}
 

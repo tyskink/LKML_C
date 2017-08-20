@@ -381,8 +381,7 @@ void LK_matrix_multpile(LK_Accuarcy * A, int A_row, int A_colum, LK_Accuarcy * B
 {
 	LK_Accuarcy *A_current_position = 0;
 	LK_Accuarcy *B_current_position = 0;
-	LK_Accuarcy *C_current_position = 0;
-	//assert(A_colum == B_row);
+	LK_Accuarcy *C_current_position = 0;		//assert(A_colum == B_row);
 	for (int row = 0; row < A_row; row++)
 	{
 		for (int column = 0; column < B_colum; column++)
@@ -414,8 +413,9 @@ void LK_FullyConnect(LK_Accuarcy * W, int W_ROW, int W_COLUM, LK_Accuarcy * X, L
 				X++;
 				W++;
 			}
-		X-=W_COLUM;
+	X-=W_COLUM;
 	 C++;
+	 bias++;
 	}
 }
 

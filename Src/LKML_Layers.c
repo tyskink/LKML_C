@@ -87,6 +87,25 @@ void LK_ZeroCenterLayer(LK_Data * input, LK_Data * ZeroCenterParameter)
  
  
 
-void LK_FullyConnectLayer(LK_Matrix * input, LK_Matrix * FCParameter)
-{
+void LK_FullyConnectLayer( LK_Kernel * FCParameter,LK_Matrix * Input, LK_Matrix* Output)
+{	
+	LK_Accuarcy_Calculate *bias = FCParameter->Bias;
+	LK_Accuarcy_Calculate *W = FCParameter->Matrix;
+	LK_Accuarcy_Calculate *X = Input->Matrix;	
+	LK_Accuarcy_Calculate *C = Output->Matrix;
+
+	for (int row = 0; row < FCParameter->H; row++)
+	{
+		*C = *bias;
+		for (int num = 0; num <  FCParameter->W; num++)
+		{
+			*C += (*X)*(*W);			//printf_s(" the W is %f 	X is %f 	C is %f \r\n",*(W),*(X ),*C);		
+			X++;
+			W++;
+		}
+		X -= FCParameter->W;
+		C++;
+		bias++;
+	}
+
 }
