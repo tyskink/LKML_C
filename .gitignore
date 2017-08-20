@@ -63,3 +63,4 @@ VS/*
 #ignore for lk data file
 *.lkd
 *.lkf
+*.lki

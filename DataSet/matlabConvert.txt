@@ -26,8 +26,13 @@ file=fopen('C:\Users\kongq\Desktop\machine_learning_ex\DataSet\MNIST\MNIST_test_
 fwrite(file,te_x_scale','single')
 fclose(file)
 
+file=fopen('C:\Users\kongq\Desktop\machine_learning_ex\DataSet\MNIST\MNIST_test_label_10000_1.lkf','w');
+fwrite(file,te_y','single')
+fclose(file)
 
-
+file=fopen('C:\Users\kongq\Desktop\machine_learning_ex\DataSet\MNIST\MNIST_train_label_60000_1.lkf','w');
+fwrite(file,tr_y','single')
+fclose(file)
 
 // convert to int 
 
@@ -44,4 +49,12 @@ tr_x_255=int32(tr_x_255);
 fwrite(file,tr_x_255','int32')
 fclose(file)
 
+file=fopen('C:\Users\kongq\Desktop\machine_learning_ex\DataSet\MNIST\MNIST_test_label_10000_1.lki','w');
+te_y=int32(te_y);
+fwrite(file,te_y','int32')
+fclose(file)
 
+file=fopen('C:\Users\kongq\Desktop\machine_learning_ex\DataSet\MNIST\MNIST_train_label_60000_1.lki','w');
+tr_y=int32(tr_y);
+fwrite(file,tr_y','int32')
+fclose(file)
