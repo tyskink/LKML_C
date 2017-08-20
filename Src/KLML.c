@@ -206,7 +206,7 @@ void Model_CNN_ICRSF_single()
 	LK_displayMatrix(&h3[0], 10, 1, "h3");
 
 	LK_Accuarcy F5B[10] = { 0 };
-	LK_Read_lkd("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/F5B.lkf", &F5B[0],  10);
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/F5B.lkf", &F5B[0],  10);
 
 	LK_matrix_addition(&h3[0], &F5B[0], 10);
 	LK_displayMatrix(&h3[0], 10, 1, "h3+b");
@@ -324,7 +324,7 @@ void Model_CNN_ICRSF_int()
 
 	float F5B_f[10] = { 0 };
 	LK_Accuarcy F5B[10] = { 0 };
-	LK_Read_lkd("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/F5B.lkf", &F5B[0], 10);
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/F5B.lkf", &F5B[0], 10);
 	Convert_single2int(&F5B_f[0], &F5B[0], 255, 10 );
 
 	LK_matrix_addition(&h3[0], &F5B[0], 10);
@@ -373,7 +373,7 @@ void Model_CNN_1_1()  //float parameter, float computation
 	LK_Accuarcy F5W[10][864] ;	
 	LK_Accuarcy F5B[10] ;
 	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/F5W.lkf", &F5W[0][0], 864 * 10);
-	LK_Read_lkd("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/F5B.lkf", &F5B[0], 10);
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/F5B.lkf", &F5B[0], 10);
 	const LK_Kernel FC = { .W = 864,.H = 10,.D = 1,.Matrix = &F5W[0][0],.Bias = &F5B[0] ,.KernelSize = 25 };
 
 	LK_Accuarcy_Calculate h3[10] ;
@@ -384,9 +384,9 @@ void Model_CNN_1_1()  //float parameter, float computation
 	int index = 10000;
 	while (index--)
 	{
-		LK_ReadDataLayer(&TestFeature, FeaturesFILE);
+		LK_ReadDataLayer(&TestFeature, FeaturesFILE);//H0
 		//fread_s(TestFeature.Matrix, TestFeature.Size*LK_Accuarcy_Data_Length, LK_Accuarcy_Data_Length, TestFeature.Size, FeaturesFILE);
-		LK_ZeroCenterLayer(&TestFeature, &ZeroCenterParameter);
+		LK_ZeroCenterLayer(&TestFeature, &ZeroCenterParameter);//H1
 
 		LK_ConvReluPoolLayer(&TestFeature,&Conv1Kernel,&H2);
 		//LK_displayMatrix3D(&h2[0][0][0], 6, 12, 12, "h2");
@@ -394,6 +394,9 @@ void Model_CNN_1_1()  //float parameter, float computation
 		LK_FullyConnectLayer(&FC, &H2,	&H3);
 		//LK_displayMatrix(&h3[0], 10, 1, "h3+b");
 
+		//LK_Softmax(&h3[0], 10);
+		LK_SoftmaxLayer(&H3);
+		LK_displayMatrix(&h3[0], 10, 1, "h3");
 
 		getchar();
 	}

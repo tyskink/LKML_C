@@ -49,6 +49,9 @@ extern "C" {
 	// Weights Array * Features Vector
 	void LK_FullyConnectLayer( LK_Kernel* FCParameter,LK_Matrix* Input, LK_Matrix* Output);
 
+
+	void LK_SoftmaxLayer(LK_Matrix* Input);
+
 #ifdef __cplusplus
 }
 #endif

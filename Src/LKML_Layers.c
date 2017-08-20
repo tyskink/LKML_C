@@ -1,6 +1,6 @@
 #include "LKML_Config.h"
 #include "LKML_Layers.h"
-
+#include<math.h>
 void LK_ConvReluPoolLayer(LK_Data* Input, LK_Kernel* Kernel, LK_Matrix* Output)
 {
 	// Parameter for Conv
@@ -108,4 +108,44 @@ void LK_FullyConnectLayer( LK_Kernel * FCParameter,LK_Matrix * Input, LK_Matrix*
 		bias++;
 	}
 
+}
+
+void LK_SoftmaxLayer(LK_Matrix * Input)
+{
+	float * IN = Input->Matrix;
+
+#if	LK_COMPUTING_ACCURACY==LK_INT
+	float SUM = 0;
+
+	for (int i = 0; i < Input->Size; i++)
+	{
+		SUM += *IN;
+		IN++;
+	}
+
+	for (int i = 0; i < Input->Size; i++)
+	{
+		IN--;
+		*IN = (*IN) / SUM;
+	}
+
+#else
+	LK_Accuarcy_Calculate SUM = 0;
+	for (int i = 0; i < Input->Size; i++)
+	{
+#if (LK_COMPUTING_ACCURACY==LK_DOUBLE)
+		*IN = exp2(*IN);
+#endif
+#if (LK_COMPUTING_ACCURACY==LK_SINGLE)
+		*IN = exp2f(*IN);
+#endif
+		SUM += *IN;
+		IN++;
+	}
+	for (int i = 0; i < Input->Size; i++)
+	{
+		IN--;
+		*IN = (*IN) / SUM;
+	}
+#endif
 }
