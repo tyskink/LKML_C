@@ -133,7 +133,7 @@ void Model_CNN_ICRSF_single()
 
 
 	LK_ZeroCenter(&Test_feature[testidex][0], &ZeroCenter_Parameters[0][0], 28 * 28);
-	//LK_displayMatrix(&Test_feature[0][0],28,28,"h0");
+	LK_displayMatrix(&Test_feature[0][0],28,28,"h0");
 
 	// Conv Layer
 	LK_Accuarcy C1K[6][5][5] = { 0 };
@@ -179,7 +179,7 @@ void Model_CNN_ICRSF_single()
 	//LK_displayMatrix(&h1[5][0][0], 24, 24, "h1m6");
 
 
-	//LK_displayMatrix3D(&h1[0][0][0], 6, 12, 12, "h1");
+	LK_displayMatrix3D(&h1[0][0][0], 6, 24, 24, "h1");
 
 	LK_ReLu(&h1[0][0][0], 3456);
 	//LK_displayMatrix(&h1[0][0][0], 3456, 1, "ReLu");
@@ -195,7 +195,7 @@ void Model_CNN_ICRSF_single()
 	LK_Pooling_Max(&h1[4][0][0], 24, 24, 2, 2, 2, 2, &h2[4][0][0], 12, 12, 1, 0);
 	LK_Pooling_Max(&h1[5][0][0], 24, 24, 2, 2, 2, 2, &h2[5][0][0], 12, 12, 1, 0);
 
-	//LK_displayMatrix3D(&h2[0][0][0],6,12,12,"h2");
+	LK_displayMatrix3D(&h2[0][0][0],6,12,12,"h2");
 
 	LK_Accuarcy F5W[10][864] = { 0 };
 	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/F5W.lkf", &F5W[0][0], 864 * 10);
@@ -341,11 +341,57 @@ void Model_CNN_ICRSF_int()
 	getchar();
 }
 
+void Model_CNN_1_1()  //float parameter, float computation 
+{
+	LK_Accuarcy_Data Test_feature[784];
+	const LK_Data TestFeature = {.W=28,.H=28,.D=1,.Size=784,.Matrix=&Test_feature[0] };
+
+	FILE *FeaturesFILE;
+	fopen_s(&FeaturesFILE, "C:/Users/kongq/Desktop/LKML_C/DataSet/MNIST_test_features_10000_784_scale.lkf", "rb");
+	 
+
+	LK_Accuarcy_Data ZeroCenter_Parameters[784];
+	const LK_Data ZeroCenterParameter = { .W = 28,.H = 28,.D = 1,.Size = 784,.Matrix = &ZeroCenter_Parameters[0] };
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/Zc.lkf", &ZeroCenter_Parameters[0], 784);
+
+	LK_Accuarcy_Data C1K[6][5][5]; 
+	LK_Accuarcy_Data C1B[6];	
+	const LK_Kernel Conv1Kernel={.W=5, .H=5, .D=6, .Matrix= &C1K[0][0][0], .Bias= &C1B[0] };
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K1.lkf", &C1K[0][0][0], 5 * 5);
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K2.lkf", &C1K[1][0][0], 5 * 5);
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K3.lkf", &C1K[2][0][0], 5 * 5);
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K4.lkf", &C1K[3][0][0], 5 * 5);
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K5.lkf", &C1K[4][0][0], 5 * 5);
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K6.lkf", &C1K[5][0][0], 5 * 5);
+	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1B.lkf", &C1B[0], 6);
+
+
+	LK_Accuarcy h2[6][12][12];
+	const LK_Matrix H2={.W=12,.H=12,.D=6,.Matrix=&h2[0][0][0] };
+
+
+	int index = 10000;
+	while (index--)
+	{
+		LK_ReadDataLayer(&TestFeature, FeaturesFILE);
+		//fread_s(TestFeature.Matrix, TestFeature.Size*LK_Accuarcy_Data_Length, LK_Accuarcy_Data_Length, TestFeature.Size, FeaturesFILE);
+		LK_ZeroCenterLayer(&TestFeature, &ZeroCenterParameter);
+
+		LK_ConvReluPoolLayer(&TestFeature,&Conv1Kernel,&H2);
+		LK_displayMatrix3D(&h2[0][0][0], 6, 12, 12, "h2");
+		getchar();
+	}
+
+
+}
+
+
 
 int main()
 {
-	Model_CNN_ICRSF_int();
-	//Model_CNN_ICRSF_single();
+	//Model_CNN_1_1();
+	//Model_CNN_ICRSF_int();
+	Model_CNN_ICRSF_single();
 	//Model_CNN_ICRSF();
 
 	//double a[5][5] = { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25 };

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "LKML_Config.h"
-
+#include "LKML_Layers.h"
 
 /*
 Example:
@@ -23,6 +23,10 @@ void LK_Read_lkf(const char* fileaddress, float* TargetData, int DataSize_num);
 
 void LK_ReadData(const char* fileaddress, LK_Accuarcy* TargetData, int DataSize_num);
 
+
+ void LK_ReadDataLayer(LK_Data* Data, FILE* DataFILE);
+
+//void LK_ReadLayer();
 /*
 Example£º
 	LK_displayMatrix(&a[0][0],5,5,"");

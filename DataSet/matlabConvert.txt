@@ -25,3 +25,23 @@ fclose(file)
 file=fopen('C:\Users\kongq\Desktop\machine_learning_ex\DataSet\MNIST\MNIST_test_features_10000_784.lkf','w');
 fwrite(file,te_x_scale','single')
 fclose(file)
+
+
+
+
+// convert to int 
+
+load C:\Users\kongq\Desktop\machine_learning_ex\DataSet\MNIST\MNIST_all_single.mat
+
+file=fopen('C:\Users\kongq\Desktop\machine_learning_ex\DataSet\MNIST\MNIST_test_features_10000_784.lki','w');
+te_x_255=int32(te_x_255);
+fwrite(file,te_x_255','int32')
+fclose(file)
+
+
+file=fopen('C:\Users\kongq\Desktop\machine_learning_ex\DataSet\MNIST\MNIST_train_features_60000_784.lki','w');
+tr_x_255=int32(tr_x_255);
+fwrite(file,tr_x_255','int32')
+fclose(file)
+
+

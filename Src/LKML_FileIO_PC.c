@@ -128,6 +128,12 @@ void LK_ReadData(const char * fileaddress, LK_Accuarcy * TargetData, int DataSiz
 	}
 }
 
+void LK_ReadDataLayer(LK_Data* Data,FILE* DataFILE)
+{
+	errno_t err;
+	 fread_s(Data->Matrix, Data->Size*LK_Accuarcy_Data_Length, LK_Accuarcy_Data_Length, Data->Size, DataFILE);
+}
+
 
 
 
@@ -154,7 +160,7 @@ void LK_displayMatrix(LK_Accuarcy * A, int Num_of_row, int Num_of_colum,const ch
 			printf_s("%d ", (LK_Accuarcy)*current_position);
 #endif
 #if	LK_COMPUTING_ACCURACY==LK_SINGLE
-			printf_s("%.4f ", (LK_Accuarcy)*current_position);
+			printf_s("%.4f	", (LK_Accuarcy)*current_position);
 #endif
 		}
 		printf_s("\r\n");
@@ -187,7 +193,7 @@ void LK_displayMatrix3D(LK_Accuarcy * A, int Num_of_map, int Num_of_row, int Num
 				printf_s("%d	", (LK_Accuarcy)*current_position);
 #endif
 #if	LK_COMPUTING_ACCURACY==LK_SINGLE
-				printf_s("%.4f ", (LK_Accuarcy)*current_position);
+				printf_s("%.4f	", (LK_Accuarcy)*current_position);
 #endif
 
 
