@@ -112,7 +112,7 @@ void LK_FullyConnectLayer( LK_Kernel * FCParameter,LK_Matrix * Input, LK_Matrix*
 
 void LK_SoftmaxLayer(LK_Matrix * Input)
 {
-	float * IN = Input->Matrix;
+	LK_Accuarcy_Calculate * IN = Input->Matrix;
 
 #if	LK_COMPUTING_ACCURACY==LK_INT
 	float SUM = 0;
@@ -148,4 +148,9 @@ void LK_SoftmaxLayer(LK_Matrix * Input)
 		*IN = (*IN) / SUM;
 	}
 #endif
+}
+
+void LK_ClassficationLayer(LK_Matrix * Input)
+{
+
 }

@@ -205,3 +205,13 @@ void LK_displayMatrix3D(LK_Accuarcy * A, int Num_of_map, int Num_of_row, int Num
 	}
 }
 
+void LK_CheckResultLayer(FILE* DataFILE, LK_Accuarcy_Calculate inputData, int * ResultAccumulator)
+{
+	errno_t err;
+	LK_Accuarcy_Data Label;
+
+	fread_s(&Label, LK_Accuarcy_Data_Length, LK_Accuarcy_Data_Length, 1, DataFILE);
+
+	*ResultAccumulator+=(int)(Label != inputData);
+}
+

@@ -349,6 +349,9 @@ void Model_CNN_1_1()  //float parameter, float computation
 	FILE *FeaturesFILE;
 	fopen_s(&FeaturesFILE, "C:/Users/kongq/Desktop/LKML_C/DataSet/MNIST_test_features_10000_784_scale.lkf", "rb");
 	 
+	FILE *labelFILE;
+	fopen_s(&labelFILE, "C:/Users/kongq/Desktop/LKML_C/DataSet/MNIST_test_label_10000_1.lkf", "rb");
+
 	//ImageInput: Zerocenter
 	LK_Accuarcy_Data ZeroCenter_Parameters[784];
 	const LK_Data ZeroCenterParameter = { .W = 28,.H = 28,.D = 1,.Size = 784,.Matrix = &ZeroCenter_Parameters[0] };
@@ -382,6 +385,7 @@ void Model_CNN_1_1()  //float parameter, float computation
 
 
 	int index = 10000;
+	int ERRORCOUNT = 0;
 	while (index--)
 	{
 		LK_ReadDataLayer(&TestFeature, FeaturesFILE);//H0
@@ -396,12 +400,14 @@ void Model_CNN_1_1()  //float parameter, float computation
 
 		//LK_Softmax(&h3[0], 10);
 		LK_SoftmaxLayer(&H3);
-		LK_displayMatrix(&h3[0], 10, 1, "h3");
+		//LK_displayMatrix(&h3[0], 10, 1, "h3");
+		//printf_s("%d	\r\n", maxofMatrix(&h3[0], 10));
 
-		getchar();
+		LK_CheckResultLayer(labelFILE, maxofMatrix(&h3[0], 10),&ERRORCOUNT);
+		
 	}
-
-
+printf_s("Error: %d", (ERRORCOUNT));
+	getchar();
 }
 
 

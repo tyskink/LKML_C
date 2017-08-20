@@ -52,6 +52,9 @@ extern "C" {
 
 	void LK_SoftmaxLayer(LK_Matrix* Input);
 
+
+	void LK_ClassficationLayer(LK_Matrix* Input);
+
 #ifdef __cplusplus
 }
 #endif

@@ -3,6 +3,7 @@
 #include "LKML_Config.h"
 #include "LKML_Layers.h"
 
+
 /*
 Example:
 	double Train_lable[60000] = {};
@@ -40,3 +41,6 @@ Example:
 	LK_displayMatrix3D(&a[0][0][0], 3, 3, 3, "a");
 */
 void LK_displayMatrix3D(LK_Accuarcy * A, int Num_of_map, int Num_of_row, int Num_of_colum, const char* name);
+
+
+void LK_CheckResultLayer(FILE* DataFILE, LK_Accuarcy_Calculate inputData, int * ResultAccumulator);
