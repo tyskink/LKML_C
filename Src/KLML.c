@@ -356,7 +356,7 @@ void Model_CNN_1_1()  //float parameter, float computation
 
 	LK_Accuarcy_Data C1K[6][5][5]; 
 	LK_Accuarcy_Data C1B[6];	
-	const LK_Kernel Conv1Kernel={.W=5, .H=5, .D=6, .Matrix= &C1K[0][0][0], .Bias= &C1B[0] };
+	const LK_Kernel Conv1Kernel={.W=5, .H=5, .D=6, .Matrix= &C1K[0][0][0], .Bias= &C1B[0] ,.KernelSize=25};
 	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K1.lkf", &C1K[0][0][0], 5 * 5);
 	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K2.lkf", &C1K[1][0][0], 5 * 5);
 	LK_Read_lkf("C:/Users/kongq/Desktop/machine_learning_ex/CNN_ZcCoReSuFuSm/C1K3.lkf", &C1K[2][0][0], 5 * 5);
@@ -389,9 +389,9 @@ void Model_CNN_1_1()  //float parameter, float computation
 
 int main()
 {
-	//Model_CNN_1_1();
+	Model_CNN_1_1();
 	//Model_CNN_ICRSF_int();
-	Model_CNN_ICRSF_single();
+	//Model_CNN_ICRSF_single();
 	//Model_CNN_ICRSF();
 
 	//double a[5][5] = { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25 };

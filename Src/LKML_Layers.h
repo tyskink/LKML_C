@@ -12,6 +12,7 @@ extern "C" {
 		 int W;
 		 int H;
 		 int D;		
+		 int MatrixSize;		// W*H
 		 int Size;				// = W*H*D;
 		 LK_Accuarcy* Matrix;	 
 	}LK_Matrix;
@@ -21,6 +22,7 @@ extern "C" {
 		int W;
 		int H;
 		int D;
+		
 		int Size;				// = W*H*D;
 		LK_Accuarcy_Data  * Matrix;
 	}LK_Data;
@@ -30,6 +32,7 @@ extern "C" {
 		int W;
 		int H;
 		int D;
+		int KernelSize;		    // W*H
 		LK_Accuarcy_Data* Matrix;
 		LK_Accuarcy_Data* Bias;
 	}LK_Kernel;
