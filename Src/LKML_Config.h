@@ -23,7 +23,7 @@
 #define LK_PLATFORM  				LK_PC
 
   
-
+#define LK_LayerUsing  false// true   //  to enable or disable the Layer features, for the Intral Layer Buffer not be used, not constraint 
 
  
 

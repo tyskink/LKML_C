@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-	LK_Accuarcy_Calculate IntralLayer_Buffer[576];   //24*24 for Conv
+	extern LK_Accuarcy_Calculate IntralLayer_Buffer[576];   //24*24 for Conv
 
 	typedef struct _LK_Matrix   // 3D Matrix
 	{

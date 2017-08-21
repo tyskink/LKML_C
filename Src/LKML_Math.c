@@ -443,6 +443,21 @@ void Convert_single2int(float *input, int *output, int times, int num)
 	}
 }
 
+LK_Accuarcy_Calculate LK_GaussianKernel(LK_Accuarcy_Calculate x, LK_Accuarcy_Calculate y, float InverseofDoubleSigmaSquare)
+{
+
+#if (LK_COMPUTING_ACCURACY==LK_DOUBLE)
+	return exp2(-sqr(fabs(x - y))* InverseofDoubleSigmaSquare);
+#endif
+#if (LK_COMPUTING_ACCURACY==LK_SINGLE)
+	return exp2f(-sqr(fabsf(x - y))* InverseofDoubleSigmaSquare);
+#endif
+
+#if (LK_COMPUTING_ACCURACY==LK_INT)
+	return exp2f(-sqr(abs(x-y))* InverseofDoubleSigmaSquare); 
+#endif
+}
+
 
 
 

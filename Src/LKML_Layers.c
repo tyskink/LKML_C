@@ -1,6 +1,9 @@
 #include "LKML_Config.h"
 #include "LKML_Layers.h"
 #include<math.h>
+
+LK_Accuarcy_Calculate IntralLayer_Buffer[576];
+
 void LK_ConvReluPoolLayer(LK_Data* Input, LK_Kernel* Kernel, LK_Matrix* Output)
 {
 	// Parameter for Conv
