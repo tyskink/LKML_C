@@ -451,7 +451,8 @@ LK_Accuarcy_Calculate LK_GaussianKernel(LK_Accuarcy_Calculate x, LK_Accuarcy_Cal
 	return exp2(-sqr(fabs(x - y))* InverseofDoubleSigmaSquare);
 #endif
 #if (LK_COMPUTING_ACCURACY==LK_SINGLE)
-	return exp2f(-sqr(fabsf(x - y))* InverseofDoubleSigmaSquare);
+	LK_Accuarcy_Calculate buffer = abs(x - y);
+	return exp2f(-buffer*buffer* InverseofDoubleSigmaSquare);
 #endif
 
 #if (LK_COMPUTING_ACCURACY==LK_INT)
