@@ -14,6 +14,10 @@ Int	Model_CNN_1_1_int()  60000  75			25795	no checklayer
 Int	Model_CNN_1_1_int()	60000	97			25759	no readleayer	no checklayer
 								77			25578	no readleayer	no checklayer
 		
+//float parameter, float computation 
+void Model_CNN_1_1()  	10000	147			5319	no readleayer	no checklayer
+						60000	393			31118	no readleayer	no checklayer
+
 
 
 

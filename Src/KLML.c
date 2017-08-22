@@ -14,10 +14,10 @@ void Model_CNN_1_1()  //float parameter, float computation
 	const LK_Data TestFeature = {.W=28,.H=28,.D=1,.Size=784,.Matrix=&Test_feature[0] };
 
 	FILE *FeaturesFILE;
-	fopen_s(&FeaturesFILE, "C:/Users/kongq/Desktop/LKML_C/DataSet/MNIST_test_features_10000_784_scale.lkf", "rb");
+	fopen_s(&FeaturesFILE, "C:/Users/kongq/Desktop/LKML_C/DataSet/MNIST_train_features_60000_784_scale.lkf", "rb");  //MNIST_train_features_60000_784_scale MNIST_test_features_10000_784_scale
 	 
 	FILE *labelFILE;
-	fopen_s(&labelFILE, "C:/Users/kongq/Desktop/LKML_C/DataSet/MNIST_test_label_10000_1.lkf", "rb");
+	fopen_s(&labelFILE, "C:/Users/kongq/Desktop/LKML_C/DataSet/MNIST_train_label_60000_1.lkf", "rb");  //MNIST_train_label_60000_1  MNIST_test_label_10000_1
 
 	//ImageInput: Zerocenter
 	LK_Accuarcy_Data ZeroCenter_Parameters[784];
@@ -51,11 +51,11 @@ void Model_CNN_1_1()  //float parameter, float computation
 
 
 
-	int index = 10000;
+	int index = 60000;
 	int ERRORCOUNT = 0;
 	while (index--)
 	{
-		LK_ReadDataLayer(&TestFeature, FeaturesFILE);//H0
+		//LK_ReadDataLayer(&TestFeature, FeaturesFILE);//H0
 		//fread_s(TestFeature.Matrix, TestFeature.Size*LK_Accuarcy_Data_Length, LK_Accuarcy_Data_Length, TestFeature.Size, FeaturesFILE);
 		LK_ZeroCenterLayer(&TestFeature, &ZeroCenterParameter);//H1
 
@@ -66,11 +66,11 @@ void Model_CNN_1_1()  //float parameter, float computation
 		//LK_displayMatrix(&h3[0], 10, 1, "h3+b");
 
 		//LK_Softmax(&h3[0], 10);
-		LK_SoftmaxLayer(&H3);
+		//LK_SoftmaxLayer(&H3);
 		//LK_displayMatrix(&h3[0], 10, 1, "h3");
-		printf_s("%d	\r\n", maxofMatrix(&h3[0], 10));
+		//printf_s("%d	\r\n", maxofMatrix(&h3[0], 10));
 
-		LK_CheckResultLayer(labelFILE, maxofMatrix(&h3[0], 10),&ERRORCOUNT);
+		//LK_CheckResultLayer(labelFILE, maxofMatrix(&h3[0], 10),&ERRORCOUNT);
 		
 	}
 printf_s("Error: %d", (ERRORCOUNT));

@@ -11,7 +11,15 @@ LK_Accuarcy sigmoid(LK_Accuarcy x)
 	LK_Accuarcy exp_value;
 	LK_Accuarcy return_value;
 	/*** Exponential calculation ***/
-	exp_value = exp((LK_Accuarcy)-x);
+	//exp_value = exp((LK_Accuarcy)-x);
+
+#if (LK_COMPUTING_ACCURACY==LK_DOUBLE)
+	exp_value = exp2((LK_Accuarcy)-x);
+#endif
+#if (LK_COMPUTING_ACCURACY==LK_SINGLE)
+	exp_value = exp2f((LK_Accuarcy)-x);
+#endif
+
 	/*** Final sigmoid value ***/
 	return_value = 1 / (1 + exp_value);
 	return return_value;
@@ -451,7 +459,7 @@ LK_Accuarcy_Calculate LK_GaussianKernel(LK_Accuarcy_Calculate x, LK_Accuarcy_Cal
 	return exp2(-sqr(fabs(x - y))* InverseofDoubleSigmaSquare);
 #endif
 #if (LK_COMPUTING_ACCURACY==LK_SINGLE)
-	LK_Accuarcy_Calculate buffer = abs(x - y);
+	LK_Accuarcy_Calculate buffer = fabsf(x - y);
 	return exp2f(-buffer*buffer* InverseofDoubleSigmaSquare);
 #endif
 
