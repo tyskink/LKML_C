@@ -1,0 +1,21 @@
+Test the time of model
+
+  		  
+Precision:	function:	testdata:	pre deal:	loop:
+
+Int	Model_CNN_1_1_int()  10000	90ms(71ms)	4296ms
+
+Int	Model_CNN_1_1_int()  60000	121ms		25922ms
+								93			26072ms
+								347			26016ms
+								
+Int	Model_CNN_1_1_int()  60000  75			25795	no checklayer
+		 
+Int	Model_CNN_1_1_int()	60000	97			25759	no readleayer	no checklayer
+								77			25578	no readleayer	no checklayer
+		
+
+
+
+
+
