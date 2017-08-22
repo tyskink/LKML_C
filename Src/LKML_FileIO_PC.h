@@ -43,4 +43,4 @@ Example:
 void LK_displayMatrix3D(LK_Accuarcy * A, int Num_of_map, int Num_of_row, int Num_of_colum, const char* name);
 
 
-void LK_CheckResultLayer(const char* fileaddress, LK_Accuarcy_Calculate inputData, int *ResultAccumulator);
+void LK_CheckResultLayer(FILE* DataFILE, LK_Accuarcy_Calculate inputData, int *ResultAccumulator);

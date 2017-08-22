@@ -3,6 +3,7 @@
 
 //#include "LK_STM32.h"
 #include<math.h>
+#include <stdlib.h>
 
 
 LK_Accuarcy sigmoid(LK_Accuarcy x)
@@ -454,12 +455,27 @@ LK_Accuarcy_Calculate LK_GaussianKernel(LK_Accuarcy_Calculate x, LK_Accuarcy_Cal
 #endif
 
 #if (LK_COMPUTING_ACCURACY==LK_INT)
-	return exp2f(-sqr(abs(x-y))* InverseofDoubleSigmaSquare); 
+	LK_Accuarcy_Calculate buffer = abs(x - y);
+	return exp2f(-buffer*buffer* InverseofDoubleSigmaSquare);
 #endif
 }
 
+void LK_SVM_REFKernel_BinaryClassifier(int SVNum, LK_Accuarcy_Calculate* Result, LK_Accuarcy_Calculate * Alpha, LK_Accuarcy_Calculate * Label, LK_Accuarcy_Calculate * X, LK_Accuarcy_Calculate * SV, LK_Accuarcy_Calculate b)
+{
+	*Result = 0;
+
+	while (SVNum--)
+	{
+		*Result += (*Alpha) * (*Label) * LK_GaussianKernel(*X, *SV, 1) + b;
+		Alpha++;
+		Label++;
+		X++;
+		SV++;
+	}
+}
 
 
+  
 
 
 int LK_maxofMatrix(LK_Accuarcy * p, int p_length)
