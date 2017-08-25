@@ -3,7 +3,11 @@
 #include "LKML_Config.h"
 #include "LKML_Layers.h"
 
+#define LK_FILE FILE*
 
+
+
+void LK_OpenFile(FILE** stream, const char* filename);
 /*
 Example:
 	double Train_lable[60000] = {};
@@ -22,9 +26,10 @@ void LK_Read_lkd(const char* fileaddress, double* TargetData, int DataSize_num);
 
 void LK_Read_lkf(const char* fileaddress, float* TargetData, int DataSize_num);
 
+//Opne file and Read data from file address
 void LK_ReadData(const char* fileaddress, LK_Accuarcy* TargetData, int DataSize_num);
 
-
+//Read data from pre-opened file
  void LK_ReadDataLayer(LK_Data* Data, FILE* DataFILE);
 
 //void LK_ReadLayer();

@@ -18,6 +18,11 @@ Example:
 	LK_displayMatrix(&Test_feature[0][0],28,28,"test1");
 
 */
+void LK_OpenFile(FILE ** stream, const char * filename)
+{
+	fopen_s(stream, filename,"rb");
+
+}
 void LK_Read_lkd(const char* fileaddress,double* TargetData,int DataSize_num)
 {
 

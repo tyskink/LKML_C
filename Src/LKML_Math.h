@@ -2,7 +2,11 @@
 //#include "LKML_Math.h"
 #include "LKML_Config.h"
 
-
+#ifdef __cplusplus
+extern "C" {
+#endif
+	
+	
 LK_Accuarcy sigmoid(LK_Accuarcy x);
 
 
@@ -127,3 +131,6 @@ LK_Accuarcy_Calculate LK_GaussianKernel(LK_Accuarcy_Calculate x, LK_Accuarcy_Cal
 
 void LK_SVM_REFKernel_BinaryClassifier(int SVNum, LK_Accuarcy_Calculate* Result, LK_Accuarcy_Calculate* Alpha, LK_Accuarcy_Calculate* Label, LK_Accuarcy_Calculate* X, LK_Accuarcy_Calculate* SV, LK_Accuarcy_Calculate b);
 //newline
+#ifdef __cplusplus
+}
+#endif

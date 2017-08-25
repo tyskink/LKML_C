@@ -59,6 +59,7 @@ VS/*
 *.crf
 *.d
 *.iex
+*.TMP
 
 #ignore for lk data file
 *.lkd
