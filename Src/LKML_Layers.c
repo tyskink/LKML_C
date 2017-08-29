@@ -1,7 +1,8 @@
 #include "LKML_Config.h"
 #include "LKML_Layers.h"
 #include<math.h>
-
+#include "stm32f7xx_hal.h"
+#include "LK_STM32.h"
 LK_Accuarcy_Calculate IntralLayer_Buffer[576];
 
 void LK_ConvReluPoolLayer(LK_Data* Input, LK_Kernel* Kernel, LK_Matrix* Output)
@@ -85,6 +86,7 @@ void LK_ZeroCenterLayer(LK_Data * input, LK_Data * ZeroCenterParameter)
 		im++;
 		meanParameter++;
 	}
+
 }
 
  
