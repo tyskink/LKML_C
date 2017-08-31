@@ -90,7 +90,7 @@ void LK_Pooling_Max(LK_Accuarcy *input, int isize_w, int isize_h,
 	*/
 void LK_ZeroCenter(LK_Accuarcy *im, LK_Accuarcy *meanParameter,int Size);
 
-
+void LK_Multiplication_Dot(LK_Accuarcy_Calculate *a, LK_Accuarcy_Calculate* b, int num);
 
 void LK_Softmax(LK_Accuarcy* IN,int Size);
 
