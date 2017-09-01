@@ -69,6 +69,27 @@ int maxofMatrix(LK_Accuarcy * p, int p_length)
 	return maxindex;
 }
 
+void LK_Randi(int* Target, int num, int seed)
+{
+
+	srand(seed);
+	while (num--)
+	{
+		*Target = rand()>>16;
+		Target++;
+	}
+}
+
+void LK_Randn(float * Target, int num, int seed)
+{
+	srand(seed);
+	while (num--)
+	{
+		*Target = rand()/ 0x7fffffff;
+		Target++;
+	}
+}
+
 void LK_ReLu(LK_Accuarcy * a, int size)
 {
 	while( size--)
@@ -339,6 +360,16 @@ void LK_ZeroCenter(LK_Accuarcy * im, LK_Accuarcy * meanParameter, int Size)   //
 		*im = *im + *meanParameter;
 		im++;
 		meanParameter++;
+	}
+}
+
+void LK_Multiplication_Dot(LK_Accuarcy_Calculate * a, LK_Accuarcy_Calculate * b, int num)
+{
+	while (num--)
+	{
+		*a = *a**b;
+		a++;
+		b++;
 	}
 }
 

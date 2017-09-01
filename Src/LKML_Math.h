@@ -1,7 +1,7 @@
 #pragma once
 //#include "LKML_Math.h"
 #include "LKML_Config.h"
-
+#include "stdlib.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -18,6 +18,11 @@ LK_Accuarcy ReLU_1(LK_Accuarcy *a);
 LK_Accuarcy ReLU_2(LK_Accuarcy a);
 
 int maxofMatrix(LK_Accuarcy *p, int p_length);
+
+
+void LK_Randi(int* Target, int num, int seed);
+
+void LK_Randn(float* Target, int num, int seed);
 
 void LK_ReLu(LK_Accuarcy *a,int size);
 
