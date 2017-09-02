@@ -1,22 +1,38 @@
 //#include "LKML_DecisionTree.h"
 #pragma once
 #include "LKML_Config.h"
+#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+	/*
+#define LK_NODEUNITE signed short int 
+	
 typedef struct _LK_NODE 
 {
-int ISENDNODE;			//	32bit
-int CUTPREDICTOR;
-int CUTPOINT;			 	//	32bit
+LK_NODEUNITE ISENDNODE;									//	32bit
+LK_NODEUNITE CUTPREDICTOR;								//	32bit
+LK_NODEUNITE CUTPOINT;			 							//	32bit
+union _Children									//	64bit
+{
+	struct _LK_NODE* Children[2];	
+LK_NODEUNITE Result[2];
+}Children;
+}LK_NODE;
+*/
 
-	union _Children
-	{
-	struct _LK_NODE* Children[2];	//	32bit
-	int Result[2];
-	}Children;
+typedef struct _LK_NODE 
+{
+bool ISENDNODE;									//	1 bit
+unsigned short CUTPREDICTOR;			//	16bit
+unsigned char CUTPOINT;			 		//	16bit
+union _Children									//	64bit
+{
+	struct _LK_NODE* Children[2];	
+int Result[2];
+}Children;
 }LK_NODE;
 
 

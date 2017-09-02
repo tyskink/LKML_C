@@ -1,8 +1,9 @@
 #include "LKML_Config.h"
 #include "LKML_DecisionTree.h"
 
+#ifdef STM32F746xx
 #include "LK_STM32.h"
-
+#endif
 
 
 
@@ -39,7 +40,7 @@ else
 
 }
 
-#if 1 //---------------------------------------------------------------------------------------------------------------------------------------	 using look-up table
+#if 0 //---------------------------------------------------------------------------------------------------------------------------------------	 using look-up table
 
 void DecisionTree_Model_1(void)	
 {
@@ -62,7 +63,7 @@ void DecisionTree_Model_1(void)
 
 
 
-#if 0 //---------------------------------------------------------------------------------------------------------------------------------------	 using struct node
+#if 1 //---------------------------------------------------------------------------------------------------------------------------------------	 using struct node
 
 void DecisionTree_Model_1(void)	
 {
@@ -78,6 +79,8 @@ void DecisionTree_Model_1(void)
 	 {.ISENDNODE=1,.CUTPREDICTOR=2,.CUTPOINT=1,.Children.Result[0]=6,.Children.Result[1]=7},   //node6
 	 };
 		
+	//unsigned char a=&node[1];
+	 
 	 int features[3]={1,0,1};
 	 
 	 printf_s("  Result is: %d", LK_SearchDecisionTree(&node[0],&features[0]));
@@ -91,20 +94,19 @@ void DecisionTree_Model_1(void)
 #if 0  //-------------------------------------------------------------------------------------------------------------------------------------	 using pure if-else model
 
 unsigned char x[784];
+
 void DecisionTree_Model_1(void)	
 {
 	x[351]=1;
 node1();
 }
-
 void node1 (void)
 {
 if (x[351]<=234) 	 
 	node2();
 else 
-	node3(); //this
+	node3();  
 }
-
 void node2(void)
 {
 if (x[569]<125)  
@@ -112,10 +114,9 @@ if (x[569]<125)
 else  
 	printf_s("  class 2"); 
 }
-
 void node3(void)
 {
-if (x[490]<=255) //this
+if (x[490]<=255) 
 	printf_s("  class 1"); 
 else  
 	printf_s("  class 2"); 
