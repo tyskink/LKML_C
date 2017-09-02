@@ -23,14 +23,14 @@ LK_NODEUNITE Result[2];
 }LK_NODE;
 */
 
-typedef struct _LK_NODE 
+typedef struct _LK_NODE 				// 12Bytes
 {
-bool ISENDNODE;									//	1 bit
-unsigned short CUTPREDICTOR;			//	16bit
-unsigned char CUTPOINT;			 		//	16bit
+bool ISENDNODE;									//	1bit
+unsigned char CUTPOINT;			 		//	8bit	
+unsigned short CUTPREDICTOR;		//	16bit
 union _Children									//	64bit
 {
-	struct _LK_NODE* Children[2];	
+struct _LK_NODE* Children[2];	
 int Result[2];
 }Children;
 }LK_NODE;
