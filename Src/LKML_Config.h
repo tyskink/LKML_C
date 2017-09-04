@@ -17,7 +17,7 @@
 
 // Configuration
 //#define __USE_ANSI_EXAMPLE_RAND
-#define LK_PARAMETER_ACCURACY		LK_SINGLE
+#define LK_PARAMETER_ACCURACY			LK_SINGLE
 #define LK_COMPUTING_ACCURACY  		LK_SINGLE	// LK_DOUBLE   // LK_SINGLE  // LK_INT (32bits) // LK_Byte // BINARY
 #define LK_OPMODE 					LK_TIME // RAM   // POW
 #define LK_PLATFORM  				LK_PC

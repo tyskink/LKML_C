@@ -1,6 +1,6 @@
 #include "LKML_Config.h"
 #include "LKML_DecisionTree.h"
-
+#include <stdbool.h>
 #ifdef STM32F746xx
 #include "LK_STM32.h"
 #endif
@@ -20,40 +20,64 @@ return ROOTNODE->Children.Result[decision];
 }
 
 
-int LK_SearchDecisionTreeTable(int*Children,int*IsBranchNode,int* CutPoint, int* CutPredictor,int*inputfeatures)
+
+
+int LK_SearchDecisionTreeTable(	int*Children,
+																bool*IsBranchNode,						//r1
+																unsigned char* CutPoint, 
+																unsigned short* CutPredictor,
+																int*inputfeatures)
 {
-int NODE=0;
-while(*(IsBranchNode+NODE))
+int NODE=0;																										//r4
+while(*(IsBranchNode+NODE))																		//r6
 {
-	
-//printf_s(" node %d, %d  %d\r\n",NODE,*(inputfeatures+*(CutPredictor+NODE)),*(CutPoint+NODE));	
 if(*(inputfeatures+*(CutPredictor+NODE))<*(CutPoint+NODE))
 	NODE=*(Children+NODE*2);
 else
 	NODE=*(Children+NODE*2+1);
-
 }
 if(*(inputfeatures+*(CutPredictor+NODE))<*(CutPoint+NODE))
 	return *(Children+NODE*2);
 else
 	return *(Children+NODE*2+1);
-
 }
+
+int LK_SearchDecisionTreeTable_re(	int*ChildrenReIndex,
+																		bool*IsBranchNode,
+																		unsigned char* CutPoint, 
+																		unsigned short* CutPredictor,
+																		int*inputfeatures)
+{
+int NODE=0;
+while(*(IsBranchNode+NODE))
+{
+if(*(inputfeatures+*(CutPredictor+NODE))<*(CutPoint+NODE))
+	NODE=*(ChildrenReIndex+NODE*2);
+else
+	NODE=*(ChildrenReIndex+NODE*2+1);
+}
+if(*(inputfeatures+*(CutPredictor+NODE))<*(CutPoint+NODE))
+	return *(ChildrenReIndex+NODE*2);
+else
+	return *(ChildrenReIndex+NODE*2+1);
+}
+
 
 #if 0 //---------------------------------------------------------------------------------------------------------------------------------------	 using look-up table
 
 void DecisionTree_Model_1(void)	
 {
-
-	int childrenTable[14]={1,2,3,4,5,6,0,1,2,3,4,5,6,7};
- int BranchTable[7]={1,1,1,0,0,0,0};
- int cutpointable[7]={1,1,1,1,1,1,1};
- int cutpredictor[7]={0,1,1,2,2,2,2};
- 
-		
-	 int features[3]={1,0,1};
-	 
-	 printf_s("  Result is: %d", LK_SearchDecisionTreeTable(&childrenTable[0],&BranchTable[0],&cutpointable[0],&cutpredictor[0],&features[0]));
+	int childrenTable[14]	={1,2,3,4,5,6,0,1,2,3,4,5,6,7};
+	bool ISBranchTable[7]	={1,1,1,0,0,0,0};
+	unsigned char cutpointable[7]	={1,1,1,1,1,1,1};
+	unsigned short cutpredictor[7]={0,1,1,2,2,2,2};		
+	int features[3]={1,0,1};
+	printf_s("  Result is: %d", LK_SearchDecisionTreeTable(	
+																			&childrenTable[0],
+																			&ISBranchTable[0],
+																			&cutpointable[0],
+																			&cutpredictor[0],
+																			&features[0]));
 }
 
 #endif
@@ -67,21 +91,19 @@ void DecisionTree_Model_1(void)
 
 void DecisionTree_Model_1(void)	
 {
-
-	 LK_NODE node[7]={
-	 {.ISENDNODE=0,.CUTPREDICTOR=0,.CUTPOINT=1,.Children.Children[0]=&node[1],.Children.Children[1]=&node[2]},   //node0
-	 {.ISENDNODE=0,.CUTPREDICTOR=1,.CUTPOINT=1,.Children.Children[0]=&node[3],.Children.Children[1]=&node[4]},   //node1
-	 {.ISENDNODE=0,.CUTPREDICTOR=1,.CUTPOINT=1,.Children.Children[0]=&node[5],.Children.Children[1]=&node[6]},   //node2
-	 
-	 {.ISENDNODE=1,.CUTPREDICTOR=2,.CUTPOINT=1,.Children.Result[0]=0,.Children.Result[1]=1},   //node3
-	 {.ISENDNODE=1,.CUTPREDICTOR=2,.CUTPOINT=1,.Children.Result[0]=2,.Children.Result[1]=3},   //node4
-	 {.ISENDNODE=1,.CUTPREDICTOR=2,.CUTPOINT=1,.Children.Result[0]=4,.Children.Result[1]=5},   //node5
-	 {.ISENDNODE=1,.CUTPREDICTOR=2,.CUTPOINT=1,.Children.Result[0]=6,.Children.Result[1]=7},   //node6
-	 };
-		
-	//unsigned char a=&node[1];
-	 
 	 int features[3]={1,0,1};
+	 
+	 LK_NODE node[7]={
+	 //Branching Children Node
+	 {.ISENDNODE=0,.CUTPREDICTOR=0,.CUTPOINT=1,.Children.Children[0]=&node[1],.Children.Children[1]=&node[2]},//node0
+	 {.ISENDNODE=0,.CUTPREDICTOR=1,.CUTPOINT=1,.Children.Children[0]=&node[3],.Children.Children[1]=&node[4]},//node1
+	 {.ISENDNODE=0,.CUTPREDICTOR=1,.CUTPOINT=1,.Children.Children[0]=&node[5],.Children.Children[1]=&node[6]},//node2
+	 //Branching Result Node
+	 {.ISENDNODE=1,.CUTPREDICTOR=2,.CUTPOINT=1,.Children.Result[0]=0,.Children.Result[1]=1},   								//node3
+	 {.ISENDNODE=1,.CUTPREDICTOR=2,.CUTPOINT=1,.Children.Result[0]=2,.Children.Result[1]=3},   								//node4
+	 {.ISENDNODE=1,.CUTPREDICTOR=2,.CUTPOINT=1,.Children.Result[0]=4,.Children.Result[1]=5},   								//node5
+	 {.ISENDNODE=1,.CUTPREDICTOR=2,.CUTPOINT=1,.Children.Result[0]=6,.Children.Result[1]=7},  								//node6
+	 };	 
 	 
 	 printf_s("  Result is: %d", LK_SearchDecisionTree(&node[0],&features[0]));
 }

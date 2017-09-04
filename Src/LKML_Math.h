@@ -129,12 +129,17 @@ void Convert_single2int(float *input, int *output, int times, int num);
 
 
 // InverseofDoubleSigmaSquare=1/(2*sigma^2)
-LK_Accuarcy_Calculate LK_GaussianKernel(LK_Accuarcy_Calculate x, LK_Accuarcy_Calculate y, float InverseofDoubleSigmaSquare);
+//LK_Accuarcy_Calculate LK_GaussianKernel(LK_Accuarcy_Calculate x, LK_Accuarcy_Calculate y, float InverseofDoubleSigmaSquare);
+LK_Accuarcy_Calculate LK_GaussianKernel(LK_Accuarcy_Calculate *x, LK_Accuarcy_Calculate *y);
 
+void LK_SVM_REFKernel_BinaryClassifier(
+																				int SVNum, 
+																				LK_Accuarcy_Calculate* Result, 
+																				LK_Accuarcy_Calculate* coef,
+																				LK_Accuarcy_Calculate* X,
+																				LK_Accuarcy_Calculate* SV_base);
 
-
-
-void LK_SVM_REFKernel_BinaryClassifier(int SVNum, LK_Accuarcy_Calculate* Result, LK_Accuarcy_Calculate* Alpha, LK_Accuarcy_Calculate* Label, LK_Accuarcy_Calculate* X, LK_Accuarcy_Calculate* SV, LK_Accuarcy_Calculate b);
+//void LK_SVM_REFKernel_BinaryClassifier(int SVNum, LK_Accuarcy_Calculate* Result, LK_Accuarcy_Calculate* Alpha, LK_Accuarcy_Calculate* Label, LK_Accuarcy_Calculate* X, LK_Accuarcy_Calculate* SV, LK_Accuarcy_Calculate b);
 //newline
 #ifdef __cplusplus
 }

@@ -50,7 +50,10 @@ int LK_SearchDecisionTree(LK_NODE* ROOTNODE, int* input);
 
 
 
-
+#define TYPE_childrenTable	int
+#define TYPE_BranchTable		bool
+#define TYPE_cutpointable		unsigned char
+#define TYPE_cutpredictor		unsigned short
 
 
 

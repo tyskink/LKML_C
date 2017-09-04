@@ -483,36 +483,120 @@ void Convert_single2int(float *input, int *output, int times, int num)
 	}
 }
 
-LK_Accuarcy_Calculate LK_GaussianKernel(LK_Accuarcy_Calculate x, LK_Accuarcy_Calculate y, float InverseofDoubleSigmaSquare)
+
+#define LK_SVM_FeatureNumber 784
+#define LK_SVM_Gamma 0.0015625
+LK_Accuarcy_Calculate LK_GaussianKernel(LK_Accuarcy_Calculate *x, LK_Accuarcy_Calculate *y)  //9cc  9978cc for 784
 {
+	LK_Accuarcy_Calculate Buffer;
+	LK_Accuarcy_Calculate Accumulator=0;	
+		
+		
+	for(int i=0;i<LK_SVM_FeatureNumber;i++)
+	{
+		Buffer=*x-*y;
+		Buffer=Buffer*Buffer;
+		Accumulator+=Buffer;
+		x++;
+		y++;
+	}
+	#if (LK_COMPUTING_ACCURACY==LK_DOUBLE)
+		return exp2(-Accumulator* LK_SVM_Gamma);
+	#endif
+	#if (LK_COMPUTING_ACCURACY==LK_SINGLE)
+		return exp2f(-Accumulator* LK_SVM_Gamma);
+	#endif
+	#if (LK_COMPUTING_ACCURACY==LK_INT)	
+		return exp2f(-Accumulator* LK_SVM_Gamma);
+	#endif
 
-#if (LK_COMPUTING_ACCURACY==LK_DOUBLE)
-	return exp2(-sqr(fabs(x - y))* InverseofDoubleSigmaSquare);
-#endif
-#if (LK_COMPUTING_ACCURACY==LK_SINGLE)
-	LK_Accuarcy_Calculate buffer = fabsf(x - y);
-	return exp2f(-buffer*buffer* InverseofDoubleSigmaSquare);
-#endif
-
-#if (LK_COMPUTING_ACCURACY==LK_INT)
-	LK_Accuarcy_Calculate buffer = abs(x - y);
-	return exp2f(-buffer*buffer* InverseofDoubleSigmaSquare);
-#endif
 }
 
-void LK_SVM_REFKernel_BinaryClassifier(int SVNum, LK_Accuarcy_Calculate* Result, LK_Accuarcy_Calculate * Alpha, LK_Accuarcy_Calculate * Label, LK_Accuarcy_Calculate * X, LK_Accuarcy_Calculate * SV, LK_Accuarcy_Calculate b)
-{
-	*Result = 0;
 
+
+void LK_SVM_REFKernel_BinaryClassifier(	int SVNum, 
+																				LK_Accuarcy_Calculate* Result, 
+																				LK_Accuarcy_Calculate * coef,
+																				LK_Accuarcy_Calculate * X, 
+																				LK_Accuarcy_Calculate * SV_base)
+{//8cc before
 	while (SVNum--)
 	{
-		*Result += (*Alpha) * (*Label) * LK_GaussianKernel(*X, *SV, 1) + b;
-		Alpha++;
-		Label++;
-		X++;
-		SV++;
+		*Result += * coef * LK_GaussianKernel(X, SV_base); 																				//3 cc per
+		coef++;
+		SV_base+=LK_SVM_FeatureNumber;
 	}
 }
+
+
+void LK_SVM_REFKernel_BinaryClassifier_1(	int SVNum, 
+																				LK_Accuarcy_Calculate* Result, 
+																				LK_Accuarcy_Calculate * coef,
+																				LK_Accuarcy_Calculate * X, 
+																				LK_Accuarcy_Calculate * SV_base, 
+																				int* SV_IndexTable)
+{																																																	//9cc before
+	while (SVNum--)																																									//
+	{
+		*Result += * coef * LK_GaussianKernel(X, SV_base+* SV_IndexTable); 															//6cc per
+		coef++;
+		SV_IndexTable++;
+	}
+}
+
+
+void LK_MultiClass_SVM()
+{
+int b[10];
+
+
+
+
+
+}
+
+
+
+//LK_Accuarcy_Calculate LK_GaussianKernel(LK_Accuarcy_Calculate x, LK_Accuarcy_Calculate y, float InverseofDoubleSigmaSquare)
+//{
+//LK_Accuarcy_Calculate Buffer;
+//	
+//	
+//	Buffer=
+//#if (LK_COMPUTING_ACCURACY==LK_DOUBLE)
+//	return exp2(-sqr(fabs(x - y))* InverseofDoubleSigmaSquare);
+//#endif
+//#if (LK_COMPUTING_ACCURACY==LK_SINGLE)
+//	LK_Accuarcy_Calculate buffer = fabsf(x - y);
+//	return exp2f(-buffer*buffer* InverseofDoubleSigmaSquare);
+//#endif
+
+//#if (LK_COMPUTING_ACCURACY==LK_INT)
+//	LK_Accuarcy_Calculate buffer = abs(x - y);
+//	return exp2f(-buffer*buffer* InverseofDoubleSigmaSquare);
+//#endif
+//}
+
+//void LK_SVM_REFKernel_BinaryClassifier(
+//																				int SVNum, 
+//																				LK_Accuarcy_Calculate* Result, 
+//																				LK_Accuarcy_Calculate * Alpha, 
+//																				LK_Accuarcy_Calculate * Label, 
+//																				LK_Accuarcy_Calculate * X, 
+//																				LK_Accuarcy_Calculate * SV, 
+//																				LK_Accuarcy_Calculate b)
+//{
+//	*Result = 0;
+
+//	while (SVNum--)
+//	{
+//		*Result += (*Alpha) * (*Label) * LK_GaussianKernel(X, SV) + b;
+//		Alpha++;
+//		Label++;
+//		X++;
+//		SV++;
+//	}
+//}
 
 
   
