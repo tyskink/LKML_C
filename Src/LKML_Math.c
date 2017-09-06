@@ -440,12 +440,9 @@ void LK_matrix_multpile(LK_Accuarcy * A, int A_row, int A_colum, LK_Accuarcy * B
 
 void LK_FullyConnect(LK_Accuarcy * W, int W_ROW, int W_COLUM, LK_Accuarcy * X, LK_Accuarcy * C,LK_Accuarcy *bias)
 {
- 
 	for (int row = 0; row < W_ROW; row++)
 	{
-		
 	 *C=*bias;
-
 			for (int num = 0; num < W_COLUM; num++)
 			{
 				*C += (*X )*(*W);

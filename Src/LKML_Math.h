@@ -5,7 +5,23 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+	#if (LK_COMPUTING_ACCURACY==LK_DOUBLE)
+		#define LK_Rand LK_Randn	
+	#endif
 	
+	#if (LK_COMPUTING_ACCURACY==LK_SINGLE)
+		#define LK_Rand LK_Randn
+	#endif
+	
+	#if (LK_COMPUTING_ACCURACY==LK_INT)	
+		#define LK_Rand LK_Randi
+	#endif
+	
+	
+
+
+
 	
 LK_Accuarcy sigmoid(LK_Accuarcy x);
 
